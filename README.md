@@ -1,6 +1,12 @@
-# Flight Data Enrichment Service
+# Flight data enrichment workflow
 
-This service enriches flight data with retail price information using the Google Flights API via SerpAPI.
+## A request becomes an enrichment task
+
+[api/main.py](api/main.py) accepts flight inputs and exposes task status. [The Celery task](backend/flights/tasks.py) performs background enrichment, while [the Django models](backend/flights/models.py) retain flights and enrichment-task state.
+
+Copy `.env.example` to a local `.env` and supply the external lookup credential before a real provider-backed run. Review provider timeouts, duplicate submissions, and failed-task recovery separately from the happy-path request. Existing source and project documentation show the workflow; they do not establish current provider availability or pricing accuracy.
+
+For persistent Django sessions, supply `DJANGO_SECRET_KEY` (or `SECRET_KEY`) in the process environment. Local development uses a fresh temporary signing key when neither is set.
 
 ## Table of Contents
 - [Features](#features)
@@ -52,7 +58,7 @@ flight-task-system/
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/omar-sajid6627/flight-task-system.git
+git clone https://github.com/DevCipher-blip/flight-data-enricher.git
 cd flight-task-system
 ```
 
@@ -359,4 +365,4 @@ Common issues and solutions:
    - Run makemigrations and migrate again
    - Check Django settings for database configuration
 
-For additional help, please create an issue on the GitHub repository. 
+For additional help, please create an issue on the GitHub repository.

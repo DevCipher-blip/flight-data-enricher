@@ -1,7 +1,18 @@
 fly/
 __pycache__/
 *.pyc
-branch_structure.json
-temp_auto_push.bat
 temp_interactive_push.bat
 .gitignore
+
+# Local environments and generated files
+.venv/
+venv/
+env/
+project_venv/
+node_modules/
+.pytest_cache/
+.env
+.env.*
+!.env.example
+!.env.sample
+.DS_Store
